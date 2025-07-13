@@ -1,0 +1,93 @@
+Python
+🔹 Where do you run the script?
+✅ Python script runs on a Linux server or a workstation with Python installed.
+✅ The router must enable NETCONF (port 830) and be accessible over the network.
+✅ The router must have a user account with sufficient privilege.
+
+🔹 What to enable on the router first:
+✅ Enable NETCONF on your Juniper router:
+
+shell
+Copy
+Edit
+set system services netconf ssh port 830
+commit
+✅ Create a NETCONF user:
+
+shell
+Copy
+Edit
+set system login user netconf-user class super-user authentication plain-text-password
+commit
+🔹 Installation (on Linux)
+Python 3 should be installed (typically already present).
+
+Installing ncclient, the NETCONF library for Python:
+
+bash
+Copy
+Edit
+pip install ncclient
+🔹 Example: Python script (add static route)
+Save this as add_static_route.py:
+
+python
+Copy
+Edit
+#! /usr/bin/env python3
+
+from ncclient import manager
+
+# Router credentials
+ROUTER = "192.0.2.1"
+PORT = 830
+USERNAME = "netconf-user"
+PASSWORD = "netconf_pass"
+
+
+# NETCONF configuration (in XML)
+config = """
+<configuration>
+  <routing-options>
+    <static>
+      <route>
+        <name>203.0.113.0/24</name>
+        <next-hop>192.0.2.254</next-hop>
+      </route>
+    </static>
+  </routing-options>
+</configuration>
+"""    
+
+def add_static_route():
+    with manager.connect(
+        host=ROUTER,
+        port=PORT,
+        username=USERNAME,
+        password=PASSWORD,
+        hostkey_verify=False
+    ) as m:
+
+        # Push configuration to router
+        m.edit_config(target='candidate', config=config)
+        m.commit()
+
+
+if __name__ == "__main__":
+    add_static_route()
+    print("Static route configured.")
+🔹 How to execute:
+bash
+Copy
+Edit
+chmod +x add_static_route.py
+./add_static_route.py
+🔹 Summary:
+✅ Python script (with ncclient) lets you:
+
+Connect to router with NETCONF
+
+Push configuration safely
+
+All from your Linux server or laptop
+
