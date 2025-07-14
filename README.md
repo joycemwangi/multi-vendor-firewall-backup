@@ -31,17 +31,17 @@ This tool enables both CLI-based and API-based backups, as well as simplified pr
 ## 📂 Project Structure
 
 multi-vendor-firewalls-config-backup-and-batch-routing/
-├── backups/ # Output folder for saved backup files
+├── backups/                   # Output folder for saved backup files
 ├── config/
-│ ├── devices.yaml # Device inventory with IPs, credentials, and device types
-│ └── push_config.yaml # CLI commands for batch interface & route configuration
+│   ├── devices.yaml           # Device inventory with IPs, credentials, and device types
+│   └── push_config.yaml       # CLI commands for batch interface & route configuration
 ├── modules/
-│ ├── backup_checkpoint.py # API-based backup for Checkpoint firewalls
-│ ├── backup_infoblox.py # API-based backup for Infoblox DNS/DHCP
-│ └── backup_zscaler.py # API-based backup for Zscaler ZIA/ZPA
-├── backup_firewalls.py # Main script to trigger configuration backups
-├── push_configs.py # Script to push interface & route configs to CLI-based devices
-└── README.md # Project documentation
+│   ├── backup_checkpoint.py   # API-based backup for Checkpoint firewalls
+│   ├── backup_infoblox.py     # API-based backup for Infoblox DDI (DNS, DHCP, IPAM)
+│   └── backup_zscaler.py      # API-based backup for Zscaler ZIA/ZPA
+├── backup_firewalls.py        # Main script to trigger configuration backups
+├── push_configs.py            # Script to push interface & route configs to CLI-based devices
+└── README.md                  # Project documentation
 
 ---
 
